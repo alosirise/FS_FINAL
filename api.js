@@ -36,21 +36,44 @@ function updateProductById(req, res) {
     var payload = req.body
     var pid = req.params.pid;
     // #7 Update a product by ID (findByIdAndUpdate)
-
+    app.put('/api/products/:id', function (req, res) {
+        var id = req.params.id;
+        var updateproduct = req.body;
+    
+        Product.findByIdAndUpdate(id, updateproduct, function (err) {
+            if (err) res.status(500).json(err);
+            res.json({ status: " Update" });
+    
+        })
+    
+    })
     // ===============================
 }
 
 function deleteProductById(req, res) {
     var pid = req.params.pid;
     // #8 Delete a product by ID (findByIdAndDelete)
+    app.get('/products/delete/:id', function (req, res) {
 
+        MongoClient.connect(url,options, function (err, db) {
+            if (err) throw err;
+            var dbo = db.db("fullstack");
+            var myquery = { ID: pid };
+            dbo.collection("products").deleteOne(myquery, function (err, obj) {
+                if (err) throw err;
+                console.log("Delete success! ");
+                res.redirect("/products");
+                db.close();
+            });
+        });
+    });
     // ===============================
 }
 
 function addProduct(req, res) {
     var payload = req.body
     // #9 Add a new product 
-
+    
     // ===============================
 }
 

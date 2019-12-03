@@ -56,7 +56,7 @@ $(function () {
         // use $.post
         $("input").keyup(function () {
             var txt = $("input").val();
-            $.POST(""), { Suggest: txt }, function (result) {
+            $.POST(""), { Suggest: newproduct }, function (result) {
                 $("span").html(result);
             }
         });
