@@ -10,7 +10,28 @@ $(function () {
     function getData() {
         // #14 Get a selected product and display as a form
         // use $.get
+        $.get(url, function (data, status) {
+            console.log(status);
+            console.log(data);
 
+            if (status == 'success') {
+                for (index in data) {
+                    var item = data[index];
+                    var row = `<tr>
+                         <td scope="row">${item.photo}</td>
+                         <td>${item.serialno}</td>
+                         <td>${item.name}</td>
+                         <td>${item.category}</td>
+                         <td>${item.price}</td>
+                         <td>${item.action}</td>
+                         <td>
+                         <a class="btn btn-primary" href="userdetail.html?id=${item.id}">view detail</a>
+                         </td>
+                         </tr>`;
+                    $('#plist').append(row);
+                }
+            }
+        })
         // ===============================
     }
 
