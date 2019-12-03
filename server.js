@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // #3 Serve static content in folder frontend
-
+express.static("frontend");
 // ===============================
 
 
@@ -34,7 +34,9 @@ router.get('/products/:pid', products.getProductById);
 
 // #4 Complete the routing for POST, PUT, DELETE
 
+
 // ===============================
+
 
 
 // REGISTER OUR ROUTES -------------------------------
