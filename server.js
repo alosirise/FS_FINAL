@@ -1,13 +1,13 @@
 // call the packages we need
 // #1 Add express package to the app
-
+var express = require('express');
 // ===============================
 
 var app = express();   
 var cors = require('cors');       
 
 // #2 Add body-parser package to the app
-
+var bodyParser = require('body-parser');
 // ===============================
 
 
@@ -42,6 +42,6 @@ router.get('/products/:pid', products.getProductById);
 app.use('/api', cors(), router);
 
 // #10 Start the server
-
+app.listen(8080);
 // ===============================
 console.log('Magic happens on http://localhost:' + port);
