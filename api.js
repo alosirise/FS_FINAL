@@ -73,7 +73,9 @@ function deleteProductById(req, res) {
 function addProduct(req, res) {
     var payload = req.body
     // #9 Add a new product 
-    
+    app.get('/productadd', function (req, res) {
+        res.render('pages/productadd');
+    });
     // ===============================
 }
 
