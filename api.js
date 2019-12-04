@@ -21,7 +21,7 @@ function getProductById(req, res) {
     // #6 Get a product by ID
     app.get('/api/products/:id', function (req, res) {
         var id = req.params.id;
-        Product.find({ "serialno": pid }, function (err, products) {
+        Product.find({ "_id": id }, function (err, products) {
             if (err) res.status(500).json(err);
             res.json(products);
         });
@@ -37,8 +37,10 @@ function updateProductById(req, res) {
     var pid = req.params.pid;
     // #7 Update a product by ID (findByIdAndUpdate)
     app.put('/api/products/:id', function (req, res) {
- 
-        Product.findByIdAndUpdate(pid, payload, function (err) {
+        var id = req.params.id;
+        var updateproduct = req.body;
+    
+        Product.findByIdAndUpdate(id, updateproduct, function (err) {
             if (err) res.status(500).json(err);
             res.json({ status: " Update" });
     
@@ -51,21 +53,28 @@ function updateProductById(req, res) {
 function deleteProductById(req, res) {
     var pid = req.params.pid;
     // #8 Delete a product by ID (findByIdAndDelete)
-    Product.findByIdAndRemove(pid, function (err) {
-        if (err) res.status(500).json(err);
-        res.json({ status: " Delete" });
-    });
+    app.get('/products/delete/:id', function (req, res) {
 
+        MongoClient.connect(url,options, function (err, db) {
+            if (err) throw err;
+            var dbo = db.db("fullstack");
+            var myquery = { ID: pid };
+            dbo.collection("products").deleteOne(myquery, function (err, obj) {
+                if (err) throw err;
+                console.log("Delete success! ");
+                res.redirect("/products");
+                db.close();
+            });
+        });
+    });
     // ===============================
 }
 
 function addProduct(req, res) {
     var payload = req.body
     // #9 Add a new product 
-    var product = new Product(payload);
-    product.save(function (err) {
-        if (err) res.status(500).json(err);
-        res.json({ status: "Add a product " });
+    app.get('/productadd', function (req, res) {
+        res.render('pages/productadd');
     });
     // ===============================
 }
